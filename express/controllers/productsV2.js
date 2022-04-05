@@ -25,3 +25,17 @@ exports.hapus = async (req, res) => {
      res.status(500).send("internal server error");
    }
  };
+
+exports.update = async (req, res) => {
+    const { id } = req.params;
+    const { name, price, stock, status } = req.body;
+  
+    try {
+      const product = await Products.findOne({ _id: id });
+      await Products.updateOne({ _id: id }, { name, price, stock, status });
+  
+      res.status(200).send(`product with id : ${product._id} updated`);
+    } catch (error) {
+      res.status(500).send("internal server error");
+    }
+  }
